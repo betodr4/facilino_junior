@@ -2518,6 +2518,83 @@
                 this.setTooltip(Facilino.locales.getKey('LANG_LOGIC_STATE_TOOLTIP'));
             }
         };
+		Blockly.Arduino.logic_state_2 = function() {
+            var code = (this.getFieldValue('STATE') === 'HIGH') ? 'HIGH' : 'LOW';
+			return [code, Blockly.Arduino.ORDER_ATOMIC];
+        };
+
+        Blockly.Blocks.logic_state_2 = {
+            category: Facilino.locales.getKey('LANG_CATEGORY_LOGIC'),
+            category_colour: Facilino.LANG_COLOUR_LOGIC,	
+			colour: Facilino.LANG_COLOUR_LOGIC,
+			keys: ['LANG_LOGIC_STATE_HIGH_2','LANG_LOGIC_STATE_LOW_2','LANG_LOGIC_STATE_TOOLTIP'],
+			output: 'boolean',
+            init: function() {
+                this.setColour(Facilino.LANG_COLOUR_LOGIC);
+                this.setOutput(true, Boolean);
+                this.appendDummyInput().appendField(new Blockly.FieldImage('img/blocks/ON.svg',20*options.zoom,20*options.zoom))
+                    .appendField(new Blockly.FieldDropdown([
+                        [Facilino.locales.getKey('LANG_LOGIC_STATE_HIGH_2'), 'HIGH'],
+                        [Facilino.locales.getKey('LANG_LOGIC_STATE_LOW_2'), 'LOW']
+                    ]), 'STATE')
+					.appendField(new Blockly.FieldImage('img/blocks/OFF.svg',20*options.zoom,20*options.zoom));
+                this.setTooltip(Facilino.locales.getKey('LANG_LOGIC_STATE_TOOLTIP'));
+            }
+        };
+		
+		Blockly.Arduino.logic_state_3 = function() {
+            var code = (this.getFieldValue('STATE') === 'HIGH') ? 'HIGH' : 'LOW';
+			return [code, Blockly.Arduino.ORDER_ATOMIC];
+        };
+
+        Blockly.Blocks.logic_state_3 = {
+            category: Facilino.locales.getKey('LANG_CATEGORY_LOGIC'),
+            category_colour: Facilino.LANG_COLOUR_LOGIC,	
+			colour: Facilino.LANG_COLOUR_LOGIC,
+			keys: ['LANG_LOGIC_STATE_HIGH_2','LANG_LOGIC_STATE_LOW_2','LANG_LOGIC_STATE_TOOLTIP'],
+			output: 'boolean',
+            init: function() {
+                this.setColour(Facilino.LANG_COLOUR_LOGIC);
+                this.setOutput(true, Boolean);
+                this.appendDummyInput('INPUT').appendField(new Blockly.FieldImage('img/blocks/binary.svg',20*options.zoom,20*options.zoom)).appendField(new Blockly.FieldDropdown([
+                        [Facilino.locales.getKey('LANG_LOGIC_STATE_HIGH_3'), 'HIGH'],
+                        [Facilino.locales.getKey('LANG_LOGIC_STATE_LOW_3'), 'LOW']
+                    ]), 'STATE').appendField(new Blockly.FieldImage('img/blocks/ON.svg',20*options.zoom,20*options.zoom),'LEFT')
+                    .appendField(Facilino.locales.getKey('LANG_LOGIC_STATE_HIGH_2'),'ARROW')
+					.appendField(new Blockly.FieldImage('img/blocks/OFF.svg',20*options.zoom,20*options.zoom),'RIGHT');
+                this.setTooltip(Facilino.locales.getKey('LANG_LOGIC_STATE_TOOLTIP'));
+				this.state=this.getFieldValue('STATE');
+				
+            },
+			onchange: function()
+			{
+				//console.log('Hello');
+				if (this.state!==this.getFieldValue('STATE'))
+				{
+					console.log('Cambio' + this.getFieldValue('STATE'));
+					this.state=this.getFieldValue('STATE');
+					var inp=this.getInput('INPUT');
+					inp.removeField('LEFT');
+					inp.removeField('ARROW');
+					inp.removeField('RIGHT');
+					if (this.state==='LOW')
+					{
+						inp.appendField(new Blockly.FieldImage('img/blocks/OFF.svg',20*options.zoom,20*options.zoom),'LEFT')
+                    .appendField(Facilino.locales.getKey('LANG_LOGIC_STATE_HIGH_2'),'ARROW')
+					.appendField(new Blockly.FieldImage('img/blocks/ON.svg',20*options.zoom,20*options.zoom),'RIGHT');
+                this.setTooltip(Facilino.locales.getKey('LANG_LOGIC_STATE_TOOLTIP'));
+					}
+					else
+					{
+						inp.appendField(new Blockly.FieldImage('img/blocks/ON.svg',20*options.zoom,20*options.zoom),'LEFT')
+                    .appendField(Facilino.locales.getKey('LANG_LOGIC_STATE_HIGH_2'),'ARROW')
+					.appendField(new Blockly.FieldImage('img/blocks/OFF.svg',20*options.zoom,20*options.zoom),'RIGHT');
+                this.setTooltip(Facilino.locales.getKey('LANG_LOGIC_STATE_TOOLTIP'));
+					}
+				}
+			}
+        };
+
 
         Blockly.Arduino.logic_compare = function() {
             var mode = this.getFieldValue('OP');
@@ -3659,7 +3736,7 @@
             }
         };
 
-		Blockly.Arduino.relay_write_write = function() {
+		Blockly.Arduino.relay_write = function() {
             var dropdown_pin = this.getFieldValue('PIN');
             var dropdown_stat = Blockly.Arduino.valueToCode(this, 'STAT', Blockly.Arduino.ORDER_ATOMIC);
             var code = '';
@@ -3675,7 +3752,7 @@
 			keys: ['LANG_RELAY_WRITE_TOOLTIP'],
             init: function() {
                 this.setColour(Facilino.LANG_COLOUR_ADVANCED);
-                this.appendDummyInput('').appendField(new Blockly.FieldImage('img/blocks/relay.svg',30*options.zoom,30*options.zoom)).appendField(new Blockly.FieldImage("img/blocks/digital_signal.svg",20*options.zoom, 20*options.zoom)).appendField(new Blockly.FieldDropdown(profiles.default.digital),'PIN');
+                this.appendDummyInput('').appendField(new Blockly.FieldImage('img/blocks/relay.svg',20*options.zoom,20*options.zoom)).appendField(new Blockly.FieldImage("img/blocks/digital_signal.svg",20*options.zoom, 20*options.zoom)).appendField(new Blockly.FieldDropdown(profiles.default.digital),'PIN');
                 this.appendValueInput('STAT').appendField(new Blockly.FieldImage('img/blocks/binary.svg',20*options.zoom,20*options.zoom)).setAlign(Blockly.ALIGN_RIGHT);
                 this.setPreviousStatement(true,'code');
                 this.setInputsInline(true);
@@ -3714,7 +3791,7 @@
             var dropdown_pin = this.getFieldValue('PIN');
             var code = '';
             Blockly.Arduino.setups_['setup_button_' + dropdown_pin] = 'pinMode(' +dropdown_pin+',INPUT);\n';
-            code += 'digitalRead(' +dropdown_pin+')';
+            code += 'digitalRead('+dropdown_pin+')';
             return [code, Blockly.Arduino.ORDER_ATOMIC];
         };
 
