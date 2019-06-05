@@ -157,10 +157,10 @@
 				"LANG_OLED_DISPLAY_TOOLTIP": "Write a string of characters on an OLED screen of 0.96' 128x64",
 				"LANG_OLED_SIZE_SMALL": "Small",
 				"LANG_OLED_SIZE_MEDIUM": "Medium",
-				"LANG_OLED_SIZE_BIG": "Great",
-				"LANG_OLED_POSITION_UP": "Up",
-				"LANG_OLED_POSITION_MIDDLE": "Medium",
-				"LANG_OLED_POSITION_DOWN": "Down",
+				"LANG_OLED_SIZE_BIG": "Large",
+				"LANG_OLED_POSITION_UP": "Top",
+				"LANG_OLED_POSITION_MIDDLE": "Middle",
+				"LANG_OLED_POSITION_DOWN": "Bottom",
 				"LANG_OLED_CLEAR_TOOLTIP": "Deletes the contents of the OLED screen"
 			}
 		}

@@ -160,7 +160,7 @@
 				"LANG_OLED_SIZE_MEDIUM": "Mediano",
 				"LANG_OLED_SIZE_BIG": "Grande",
 				"LANG_OLED_POSITION_UP": "Arriba",
-				"LANG_OLED_POSITION_MIDDLE": "Medio",
+				"LANG_OLED_POSITION_MIDDLE": "En medio",
 				"LANG_OLED_POSITION_DOWN": "Abajo",
 				"LANG_OLED_CLEAR_TOOLTIP": "Borra el contenido de la pantalla OLED"
 			}
