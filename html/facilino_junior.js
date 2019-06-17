@@ -4935,8 +4935,8 @@
 				Blockly.Arduino.definitions_['dht']=JST['dht_definitions_include']({});
 				Blockly.Arduino.definitions_['declare_var_define_dht'+type+dropdown_pin]=JST['dht_definitions_variables']({pin : dropdown_pin, type: type});
 				Blockly.Arduino.setups_['setup_dht' + dropdown_pin] = JST['dht_setups']({pin: dropdown_pin, type: type});
-				var codehigh='else{\n'+indentSentences(high)+'\n}\n'
-				var codelow='if(sensor'+type+'_'+dropdown_pin+'.readTemperature() >'+temp_low+'){\n'+indentSentences(low)+'\n}\n'
+				var codelow='if(sensor'+type+'_'+dropdown_pin+'.readTemperature() >'+temp_high+'){\n while(sensor'+type+'_'+dropdown_pin+'.readTemperature() >'+temp_low+'){\n'+indentSentences(high)+'\n}\n}'
+				var codehigh='else{\n'+indentSentences(low)+'\n}\n'
 				code += codelow + codehigh
 				return [code,Blockly.Arduino.CODE_ATOMIC];
 
@@ -5004,8 +5004,8 @@
 				var light_low = this.getFieldValue('light_low');
 				var light_low_c = (light_low * 1023)/100;
 				var low = Blockly.Arduino.statementToCode(this,'LOW') || '';
-				var codehigh = 'else{\n'+indentSentences(high)+'\n}\n'
-				var codelow = 'if('+JST['inout_analog_read']({'dropdown_pin': dropdown_pin})+'<'+light_low_c+'){\n'+indentSentences(low)+'\n}\n'
+				var codehigh = 'else{\n'+indentSentences(low)+'\n}\n'
+				var codelow = 'if('+JST['inout_analog_read']({'dropdown_pin': dropdown_pin})+'<'+light_low_c+'){\n'+indentSentences(high)+'\n}\n'
 				code += codelow + codehigh
 				return [code,Blockly.Arduino.CODE_ATOMIC];
         };
@@ -5022,11 +5022,11 @@
 				.appendField(new Blockly.FieldImage("img/blocks/ldr.svg",48*options.zoom,20*options.zoom)).setAlign(Blockly.ALIGN_RIGHT);
 			this.appendDummyInput('').appendField(new Blockly.FieldImage("img/blocks/analog_signal.svg", 20*options.zoom, 20*options.zoom))
 				.setAlign(Blockly.ALIGN_RIGHT).appendField(new Blockly.FieldDropdown(profiles.default.analog),'PIN');
-			this.appendStatementInput('HIGH').appendField(new Blockly.FieldImage("img/blocks/sun.svg",20*options.zoom,20*options.zoom))
-				.appendField(new Blockly.FieldTextInput(""),'light_high')
-				.appendField(new Blockly.FieldLabel("%"))
-			this.appendStatementInput('LOW').appendField(new Blockly.FieldImage("img/blocks/moon.svg",20*options.zoom,20*options.zoom))
+			this.appendStatementInput('HIGH').appendField(new Blockly.FieldImage("img/blocks/moon.svg",20*options.zoom,20*options.zoom))
 				.appendField(new Blockly.FieldTextInput(""),'light_low')
+				.appendField(new Blockly.FieldLabel("%"))
+			this.appendStatementInput('LOW').appendField(new Blockly.FieldImage("img/blocks/sun.svg",20*options.zoom,20*options.zoom))
+				.appendField(new Blockly.FieldTextInput(""),'light_high')
 				.appendField(new Blockly.FieldLabel("%"))
 			this.setInputsInline(true);
 			this.setPreviousStatement(true, null);
@@ -5073,8 +5073,8 @@
 				var hum_low = this.getFieldValue('hum_low');
 				var hum_low_c = (hum_low * 1023)/100;
 				var low = Blockly.Arduino.statementToCode(this,'LOW') || '';
-				var codehigh = 'else{\n'+indentSentences(high)+'\n}\n';
-				var codelow = 'if('+JST['inout_analog_read']({'dropdown_pin': dropdown_pin})+'<'+hum_low_c+'){\n'+indentSentences(low)+'\n}\n';
+				var codehigh = 'else{\n'+indentSentences(low)+'\n}\n';
+				var codelow = 'if('+JST['inout_analog_read']({'dropdown_pin': dropdown_pin})+'<'+hum_low_c+'){\n while('+JST['inout_analog_read']({'dropdown_pin': dropdown_pin})+'<'+hum_high_c+'){\n'+indentSentences(high)+'\n}\n}';
 				code += codelow + codehigh;
 				return [code,Blockly.Arduino.CODE_ATOMIC];
 
@@ -5092,11 +5092,11 @@
 				.appendField(new Blockly.FieldImage("img/blocks/soil.svg",48*options.zoom,20*options.zoom)).setAlign(Blockly.ALIGN_RIGHT);
 			this.appendDummyInput('').appendField(new Blockly.FieldImage("img/blocks/analog_signal.svg", 20*options.zoom, 20*options.zoom))
 				.setAlign(Blockly.ALIGN_RIGHT).appendField(new Blockly.FieldDropdown(profiles.default.analog),'PIN');
-			this.appendStatementInput('HIGH').appendField(new Blockly.FieldImage("img/blocks/humidity_high.svg",20*options.zoom,20*options.zoom))
-				.appendField(new Blockly.FieldTextInput(""),'hum_high')
-				.appendField(new Blockly.FieldLabel("%"))
-			this.appendStatementInput('LOW').appendField(new Blockly.FieldImage("img/blocks/humidity_low.svg",20*options.zoom,20*options.zoom))
+			this.appendStatementInput('HIGH').appendField(new Blockly.FieldImage("img/blocks/humidity_low.svg",20*options.zoom,20*options.zoom))
 				.appendField(new Blockly.FieldTextInput(""),'hum_low')
+				.appendField(new Blockly.FieldLabel("%"))
+			this.appendStatementInput('LOW').appendField(new Blockly.FieldImage("img/blocks/humidity_high.svg",20*options.zoom,20*options.zoom))
+				.appendField(new Blockly.FieldTextInput(""),'hum_high')
 				.appendField(new Blockly.FieldLabel("%"))
 			this.setInputsInline(true);
 			this.setPreviousStatement(true, null);
